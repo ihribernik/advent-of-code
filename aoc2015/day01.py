@@ -1,3 +1,4 @@
+from pathlib import Path
 from utils import Runner
 
 
@@ -5,13 +6,6 @@ class Day01(Runner):
     def __init__(self, input_file):
         self.input_file = input_file
         self.input_stream = self.parse(input_file)
-
-    def name(self) -> str:
-        return self.input_file
-
-    def parse(self, file_name):
-        with open(file_name, "r", encoding="utf-8") as fr:
-            return fr.readline()
 
     def part1(self) -> str:
         result = 0
@@ -38,6 +32,3 @@ class Day01(Runner):
                         break
 
         return str(position_char)
-
-    def run(self):
-        return super().run()

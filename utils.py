@@ -7,17 +7,21 @@ logger = Logger(__name__)
 
 
 class Runner(ABC):
+    input_file: Path
+    multiple_lines: bool = False
+
     @abstractmethod
     def __init__(self, input_file):
         raise NotImplementedError("Runner.__init__ is not Implemented")
 
-    @abstractmethod
     def name(self) -> Path:
-        raise NotImplementedError("Runner.name is not Implemented")
+        return self.input_file
 
-    @abstractmethod
     def parse(self, file_name):
-        raise NotImplementedError("Runner.parse is not Implemented")
+        with open(file_name, "r", encoding="utf-8") as fr:
+            if self.multiple_lines:
+                return fr.readlines()
+            return fr.readline()
 
     @abstractmethod
     def part1(self) -> str:
@@ -27,7 +31,6 @@ class Runner(ABC):
     def part2(self) -> str:
         raise NotImplementedError("Runner.part2 is not Implemented")
 
-    @abstractmethod
     def run(self):
         result_1 = self.part1()
         result_2 = self.part2()

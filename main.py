@@ -1,4 +1,4 @@
-from aoc2015 import day01
+from aoc2015 import day01, day02
 from pathlib import Path
 
 ROOT_FOLDER = Path(__name__).cwd()
@@ -9,7 +9,8 @@ YEARS_FOLDER = {
 
 
 def main():
-    runner = day01.Day01(input_file=YEARS_FOLDER["aoc2015"] / "day01.txt")
+    # runner = day01.Day01(input_file=YEARS_FOLDER["aoc2015"] / "day01.txt")
+    runner = day02.Day02(input_file=YEARS_FOLDER["aoc2015"] / "day02.txt")
     runner.run()
 
 
