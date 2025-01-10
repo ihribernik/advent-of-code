@@ -14,6 +14,7 @@ class Runner(ABC):
     def __init__(self, input_file):
         raise NotImplementedError("Runner.__init__ is not Implemented")
 
+    @property
     def name(self) -> Path:
         return self.input_file
 
@@ -24,16 +25,16 @@ class Runner(ABC):
             return fr.readline()
 
     @abstractmethod
-    def part1(self) -> str:
+    def part1(self) -> int:
         raise NotImplementedError("Runner.part1 is not Implemented")
 
     @abstractmethod
-    def part2(self) -> str:
+    def part2(self) -> int:
         raise NotImplementedError("Runner.part2 is not Implemented")
 
     def run(self):
         result_1 = self.part1()
         result_2 = self.part2()
-        logger.warning("current day: %s", self.name().name)
+        logger.warning("current day: %s", self.name)
         logger.warning("part 1: %s", result_1)
         logger.warning("part 2: %s", result_2)

@@ -1,6 +1,6 @@
-from pathlib import Path
-from utils import Runner
 from typing import List
+
+from utils import Runner
 
 
 class Day02(Runner):
@@ -9,11 +9,12 @@ class Day02(Runner):
         self.multiple_lines = True
         self.input_stream = self.parse(self.input_file)
 
-    def parse_line(self, line) -> List[int]:
+    @staticmethod
+    def parse_line(line: str) -> List[int]:
         numbers = [int(i) for i in line.strip().split("x")]
         return numbers
 
-    def part1(self) -> str:
+    def part1(self) -> int:
         result = 0
         for line in self.input_stream:
             l, w, h = self.parse_line(line)
@@ -23,9 +24,9 @@ class Day02(Runner):
             result_area = total_area + extra_paper
             result += result_area
 
-        return str(result)
+        return result
 
-    def part2(self) -> str:
+    def part2(self) -> int:
         result = 0
         for line in self.input_stream:
             numbers = self.parse_line(line)
@@ -35,4 +36,4 @@ class Day02(Runner):
             bow_feet = l * w * h
             total_feet = wrap_feet + bow_feet
             result += total_feet
-        return str(result)
+        return result

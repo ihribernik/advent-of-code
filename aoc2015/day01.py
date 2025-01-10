@@ -1,13 +1,11 @@
-from pathlib import Path
 from utils import Runner
-
 
 class Day01(Runner):
     def __init__(self, input_file):
         self.input_file = input_file
         self.input_stream = self.parse(input_file)
 
-    def part1(self) -> str:
+    def part1(self) -> int:
         result = 0
         for direction in self.input_stream:
             match direction:
@@ -15,10 +13,9 @@ class Day01(Runner):
                     result += 1
                 case ")":
                     result -= 1
+        return result
 
-        return str(result)
-
-    def part2(self) -> str:
+    def part2(self) -> int:
         floor = 0
         position_char = 0
         for index, direction in enumerate(self.input_stream):
@@ -28,7 +25,7 @@ class Day01(Runner):
                 case ")":
                     floor -= 1
                     if floor == -1:
-                        position_char = index
+                        position_char = index +1
                         break
 
-        return str(position_char)
+        return position_char
