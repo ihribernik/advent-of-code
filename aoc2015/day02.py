@@ -3,11 +3,13 @@ from typing import List
 from utils import Runner
 
 
-class Day02(Runner):
-    def __init__(self, input_file):
+class Solution(Runner):
+    def __init__(self, input_file: str):
         self.input_file = input_file
         self.multiple_lines = True
         self.input_stream = self.parse(self.input_file)
+        if self.multiple_lines:
+            self.input_stream = self.input_stream.splitlines()
 
     @staticmethod
     def parse_line(line: str) -> List[int]:
