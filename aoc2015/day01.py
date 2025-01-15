@@ -1,7 +1,8 @@
 from utils import Runner
 
+
 class Day01(Runner):
-    def __init__(self, input_file):
+    def __init__(self, input_file: str) -> None:
         self.input_file = input_file
         self.input_stream = self.parse(input_file)
 
@@ -25,7 +26,7 @@ class Day01(Runner):
                 case ")":
                     floor -= 1
                     if floor == -1:
-                        position_char = index +1
+                        position_char = index + 1
                         break
 
         return position_char

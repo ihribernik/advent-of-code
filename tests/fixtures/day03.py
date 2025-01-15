@@ -6,6 +6,6 @@ input_stream = (
 
 second_input_stream = (
     ("^v", 3),
-    ("^>v<", 14),
+    ("^>v<", 3),
     ("^v^v^v^v^v", 11),
 )

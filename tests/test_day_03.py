@@ -1,7 +1,7 @@
 import pytest
 
-from aoc2015.day03 import Day03
-from tests.fixtures.day02 import input_stream, second_input_stream
+from aoc2015.day03 import Solution
+from tests.fixtures.day03 import input_stream, second_input_stream
 
 
 @pytest.mark.parametrize(
@@ -10,9 +10,9 @@ from tests.fixtures.day02 import input_stream, second_input_stream
         *input_stream,
     ),
 )
-def test_day02_part_1(input_s: str, expected: int, monkeypatch):
-    day = Day03("inputs/aoc2015/day03.txt")
-    monkeypatch.setattr(day, "input_stream", input_s.splitlines())
+def test_day03_part_1(input_s: str, expected: int, monkeypatch):
+    day = Solution("inputs/aoc2015/day03.txt")
+    monkeypatch.setattr(day, "input_stream", input_s)
     result = day.part1()
     assert result == expected
 
@@ -23,8 +23,8 @@ def test_day02_part_1(input_s: str, expected: int, monkeypatch):
         *second_input_stream,
     ),
 )
-def test_day02_part_2(input_s: str, expected: int, monkeypatch):
-    day = Day03("inputs/aoc2015/day03.txt")
-    monkeypatch.setattr(day, "input_stream", input_s.splitlines())
+def test_day03_part_2(input_s: str, expected: int, monkeypatch):
+    day = Solution("inputs/aoc2015/day03.txt")
+    monkeypatch.setattr(day, "input_stream", input_s)
     result = day.part2()
     assert result == expected
