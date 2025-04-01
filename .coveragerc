@@ -1,7 +1,0 @@
-[run]
-omit = */tests/*
-       */migrations/*
-
-[coverage:report]
-fail_under = 80
-show_missing = True
