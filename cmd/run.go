@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/ihribernik/advent-of-code/common/directions"
 	"github.com/ihribernik/advent-of-code/internal/solutions/y2015"
+	"github.com/ihribernik/advent-of-code/pkg/common/directions"
 	"github.com/spf13/cobra"
 )
 
@@ -35,6 +35,7 @@ func runner(cmd *cobra.Command, args []string) {
 	directionB := directions.Direction{1, -1}
 
 	result := directionA > directionB
+	panic("a is greather than b %v", result)
 
 	result, err := runSolution(year, day)
 
