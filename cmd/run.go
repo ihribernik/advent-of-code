@@ -5,10 +5,9 @@ package cmd
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/ihribernik/advent-of-code/internal/solutions/y2015"
-	"github.com/ihribernik/advent-of-code/pkg/common/directions"
+	"github.com/ihribernik/advent-of-code/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -21,29 +20,29 @@ var runCmd = &cobra.Command{
 }
 
 func runner(cmd *cobra.Command, args []string) {
-	year, err := strconv.Atoi(args[0])
-	if err != nil {
-		panic("Error: year must be a string")
-	}
+	// year, err := strconv.Atoi(args[0])
+	// if err != nil {
+	// 	panic("Error: year must be a string")
+	// }
 
-	day, err := strconv.Atoi(args[1])
-	if err != nil {
-		panic("Error: day must be a string")
-	}
+	// day, err := strconv.Atoi(args[1])
+	// if err != nil {
+	// 	panic("Error: day must be a string")
+	// }
 
-	directionA := directions.Direction{1, 1}
-	directionB := directions.Direction{1, -1}
+	directionA := common.Direction{X: 1, Y: 1}
+	directionB := common.Direction{X: 1, Y: -1}
 
-	result := directionA > directionB
-	panic("a is greather than b %v", result)
+	result := directionA.GreaterThan(directionB)
+	panic(fmt.Errorf("a is greather than b %v", result))
 
-	result, err := runSolution(year, day)
+	// result, err := runSolution(year, day)
 
-	if err != nil {
-		panic(err)
-	}
+	// if err != nil {
+	// 	panic(err)
+	// }
 
-	fmt.Printf("The result is %v", result)
+	// fmt.Printf("The result is %v", result)
 }
 
 func runSolution(year int, day int) (int, error) {

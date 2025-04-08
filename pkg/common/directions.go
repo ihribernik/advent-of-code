@@ -1,8 +1,8 @@
 package common
 
 type Direction struct {
-	dx int
-	dy int
+	X int
+	Y int
 }
 
 var (
@@ -13,21 +13,21 @@ var (
 )
 
 func (dir Direction) LessThan(otherDir Direction) bool {
-	if dir.dx != otherDir.dx {
-		return dir.dx < otherDir.dx
+	if dir.X != otherDir.X {
+		return dir.X < otherDir.X
 	}
-	return dir.dy < otherDir.dy
+	return dir.Y < otherDir.Y
 }
 
 func (dir Direction) GreaterThan(otherDir Direction) bool {
-	if dir.dx != otherDir.dx {
-		return dir.dx > otherDir.dx
+	if dir.X != otherDir.X {
+		return dir.X > otherDir.X
 	}
-	return dir.dy > otherDir.dy
+	return dir.Y > otherDir.Y
 }
 
 func (dir Direction) NewPosition(otherDir Direction, n int) Direction {
-	dx := dir.dx + n + otherDir.dx
-	dy := dir.dy + n + otherDir.dy
+	dx := dir.X + n + otherDir.X
+	dy := dir.Y + n + otherDir.Y
 	return Direction{dx, dy}
 }
