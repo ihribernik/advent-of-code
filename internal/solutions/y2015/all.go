@@ -1,5 +1,5 @@
 package y2015
 
 import (
-	_ "github.com/ihribernik/advent-of-code/internal/solutions/y2015/day01"
+	_ "github.com/ihribernik/advent-of-code/internal/solutions/y2015"
 )
