@@ -39,11 +39,23 @@ func runner(cmd *cobra.Command, args []string) {
 	}
 
 	runner := common.Runner{Year: year, Day: day}
-	input, err := runner.Parse()
+	input, err := runner.Input()
+
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 
 	result1, err := solver.SolvePart1(input)
-	result2, err := solver.SolvePart2(input)
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 	fmt.Println("Parte 1:", result1)
+
+	result2, err := solver.SolvePart2(input)
+
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
 	fmt.Println("Parte 2:", result2)
 }
 

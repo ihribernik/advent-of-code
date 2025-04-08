@@ -12,7 +12,7 @@ type Runner struct {
 	Day  int
 }
 
-func (runner Runner) Parse() (string, error) {
+func (runner Runner) Input() (string, error) {
 	filepath := filepath.Join("input", fmt.Sprintf("%d", runner.Year), fmt.Sprintf("day%02d.txt", runner.Day))
 	content, err := os.ReadFile(filepath)
 	if err != nil {
