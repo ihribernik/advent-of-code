@@ -5,8 +5,11 @@ package cmd
 
 import (
 	"fmt"
+	"log"
+	"strconv"
 
-	"github.com/ihribernik/advent-of-code/internal/solutions/y2015"
+	"github.com/ihribernik/advent-of-code/internal/solutions"
+	_ "github.com/ihribernik/advent-of-code/internal/solutions/y2015"
 	"github.com/ihribernik/advent-of-code/pkg/common"
 	"github.com/spf13/cobra"
 )
@@ -20,49 +23,28 @@ var runCmd = &cobra.Command{
 }
 
 func runner(cmd *cobra.Command, args []string) {
-	// year, err := strconv.Atoi(args[0])
-	// if err != nil {
-	// 	panic("Error: year must be a string")
-	// }
-
-	// day, err := strconv.Atoi(args[1])
-	// if err != nil {
-	// 	panic("Error: day must be a string")
-	// }
-
-	directionA := common.Direction{X: 1, Y: 1}
-	directionB := common.Direction{X: 1, Y: -1}
-
-	result := directionA.GreaterThan(directionB)
-	panic(fmt.Errorf("a is greather than b %v", result))
-
-	// result, err := runSolution(year, day)
-
-	// if err != nil {
-	// 	panic(err)
-	// }
-
-	// fmt.Printf("The result is %v", result)
-}
-
-func runSolution(year int, day int) (int, error) {
-	switch year {
-	case 2015:
-		executedYear, err := runYear2015(day)
-		return executedYear, err
-	default:
-		return 0, fmt.Errorf("error: no se encontro el anio")
+	year, err := strconv.Atoi(args[0])
+	if err != nil {
+		log.Fatal("Error: year must be a string")
 	}
-}
 
-func runYear2015(day int) (int, error) {
-	switch day {
-	case 1:
-		executedDay, err := y2015.Day01()
-		return executedDay, err
-	default:
-		return 0, fmt.Errorf("no se Encontro el dia ejecutar")
+	day, err := strconv.Atoi(args[1])
+	if err != nil {
+		log.Fatal("Error: day must be a string")
 	}
+
+	solver, ok := solutions.GetSolver(year, day)
+	if !ok {
+		log.Fatalf("No se encontró solución para el año %d, día %d", year, day)
+	}
+
+	runner := common.Runner{Year: year, Day: day}
+	input, err := runner.Parse()
+
+	result1, err := solver.SolvePart1(input)
+	result2, err := solver.SolvePart2(input)
+	fmt.Println("Parte 1:", result1)
+	fmt.Println("Parte 2:", result2)
 }
 
 func init() {
