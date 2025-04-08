@@ -5,8 +5,8 @@ import (
 )
 
 type Solver interface {
-	SolvePart1(input string) (int, error)
-	SolvePart2(input string) (int, error)
+	SolvePart1(input []string) (int, error)
+	SolvePart2(input []string) (int, error)
 }
 
 var registry = make(map[string]Solver)

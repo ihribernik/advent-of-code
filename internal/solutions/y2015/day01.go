@@ -4,13 +4,13 @@ import "github.com/ihribernik/advent-of-code/internal/solutions"
 
 type Day01 struct{}
 
-func (d Day01) SolvePart1(input string) (int, error) {
+func (d Day01) SolvePart1(input []string) (int, error) {
 	result := 0
 	for _, v := range input {
 		switch v {
-		case rune('('):
+		case "(":
 			result += 1
-		case rune(')'):
+		case ")":
 			result -= 1
 
 		default:
@@ -20,7 +20,7 @@ func (d Day01) SolvePart1(input string) (int, error) {
 	return result, nil
 }
 
-func (d Day01) SolvePart2(input string) (int, error) {
+func (d Day01) SolvePart2(input []string) (int, error) {
 	positionChar := 0
 	floor := 0
 
@@ -31,9 +31,9 @@ func (d Day01) SolvePart2(input string) (int, error) {
 		}
 
 		switch v {
-		case rune('('):
+		case "(":
 			floor += 1
-		case rune(')'):
+		case ")":
 			floor -= 1
 		default:
 			continue
