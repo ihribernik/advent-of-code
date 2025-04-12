@@ -38,17 +38,23 @@ func (d Day03) SolvePart1(input []string) (int, error) {
 func (d Day03) SolvePart2(input []string) (int, error) {
 	position := common.Direction{X: 0, Y: 0}
 
+	positions := []common.Direction{
+		position,
+		position,
+	}
+
 	visited := []common.Direction{
 		position,
 	}
 
-	directions := strings.Split(input[0], "")
+	directions := d.parseLine(input)
 
 	for chunk := range slices.Chunk(directions, 2) {
-		for _, direction := range chunk {
-			position := common.DIRECTIONS[direction].NewPositionWith(position)
-			if !slices.Contains(visited, position) {
-				visited = append(visited, position)
+		for i, direction := range chunk {
+			currentDirection := common.DIRECTIONS[direction]
+			positions[i] = currentDirection.NewPositionWith(positions[i])
+			if !slices.Contains(visited, positions[i]) {
+				visited = append(visited, positions[i])
 			}
 		}
 
