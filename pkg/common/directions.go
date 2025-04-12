@@ -40,9 +40,9 @@ func (dir Direction) NewPositionWith(otherDir Direction) Direction {
 }
 
 func (dir Direction) NewPosition(otherDir Direction, n int) Direction {
-	dx := dir.X + n + otherDir.X
-	dy := dir.Y + n + otherDir.Y
-	return Direction{dx, dy}
+	dx := dir.X + (n * otherDir.X)
+	dy := dir.Y + (n * otherDir.Y)
+	return Direction{X: dx, Y: dy}
 }
 
 func (d Direction) String() string {

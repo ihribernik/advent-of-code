@@ -38,7 +38,7 @@ func runner(cmd *cobra.Command, args []string) {
 		log.Fatalf("No se encontró solución para el año %d, día %d", year, day)
 	}
 
-	runner := common.Runner{Year: year, Day: day}
+	runner := common.Runner{Year: year, Day: day} // TODO: change common.Runner to common.InputParser
 	input, err := runner.Input()
 
 	if err != nil {
