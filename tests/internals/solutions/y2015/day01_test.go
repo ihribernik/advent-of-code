@@ -10,8 +10,8 @@ import (
 func TestDay01_SolvePart1(t *testing.T) {
 
 	type TestCase struct {
-		input    []string
-		expected int
+		input          []string
+		expectedResult int
 	}
 
 	testsCases := []TestCase{
@@ -34,8 +34,8 @@ func TestDay01_SolvePart1(t *testing.T) {
 
 			if err != nil {
 
-				if result != testCase.expected {
-					t.Fatalf("test %v: expected: %v, got: %v", i+1, testCase.expected, result)
+				if result != testCase.expectedResult {
+					t.Fatalf("test %v: expected: %v, got: %v", i+1, testCase.expectedResult, result)
 				}
 			}
 		})
