@@ -4,9 +4,14 @@ import (
 	"fmt"
 )
 
+type Solution struct {
+	Result    int
+	MapResult map[string]any
+}
+
 type Solver interface {
-	SolvePart1(input []string) (int, error)
-	SolvePart2(input []string) (int, error)
+	SolvePart1(input []string) (Solution, error)
+	SolvePart2(input []string) (Solution, error)
 }
 
 var registry = make(map[string]Solver)

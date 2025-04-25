@@ -11,7 +11,7 @@ import (
 type Day05 struct{}
 
 // SolvePart1 implements solutions.Solver.
-func (d Day05) SolvePart1(input []string) (int, error) {
+func (d Day05) SolvePart1(input []string) (solutions.Solution, error) {
 	vowels := "aeiou"
 	forgotedStringRegexp := regexp.MustCompile("(ab|cd|pq|xy)")
 
@@ -37,7 +37,8 @@ func (d Day05) SolvePart1(input []string) (int, error) {
 		}
 
 	}
-	return result, nil
+	return solutions.Solution{Result: result}, nil
+
 }
 
 // --- Part Two ---
@@ -57,7 +58,7 @@ func (d Day05) SolvePart1(input []string) (int, error) {
 // How many strings are nice under these new rules?
 
 // SolvePart2 implements solutions.Solver.
-func (d Day05) SolvePart2(input []string) (int, error) {
+func (d Day05) SolvePart2(input []string) (solutions.Solution, error) {
 
 	result := 0
 	for _, word := range input {
@@ -84,7 +85,8 @@ func (d Day05) SolvePart2(input []string) (int, error) {
 			result += 1
 		}
 	}
-	return result, nil
+
+	return solutions.Solution{Result: result}, nil
 }
 
 func init() {

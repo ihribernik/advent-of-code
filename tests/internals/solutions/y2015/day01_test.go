@@ -11,15 +11,15 @@ func TestDay01_SolvePart1(t *testing.T) {
 
 	type TestCase struct {
 		input          []string
-		expectedResult int
+		expectedResult solutions.Solution
 	}
 
 	testsCases := []TestCase{
-		{[]string{"("}, 1},
-		{[]string{"(", ")"}, 0},
-		{[]string{"(", "(", ")"}, 1},
-		{[]string{"(", ")", "(", ")"}, 0},
-		{[]string{"(", "(", ")", "(", ")"}, 1},
+		{[]string{"("}, solutions.Solution{Result: 1}},
+		{[]string{"(", ")"}, solutions.Solution{Result: 0}},
+		{[]string{"(", "(", ")"}, solutions.Solution{Result: 1}},
+		{[]string{"(", ")", "(", ")"}, solutions.Solution{Result: 0}},
+		{[]string{"(", "(", ")", "(", ")"}, solutions.Solution{Result: 1}},
 	}
 
 	solver, ok := solutions.GetSolver(2015, 01)
@@ -34,7 +34,7 @@ func TestDay01_SolvePart1(t *testing.T) {
 
 			if err != nil {
 
-				if result != testCase.expectedResult {
+				if result.Result != testCase.expectedResult.Result {
 					t.Fatalf("test %v: expected: %v, got: %v", i+1, testCase.expectedResult, result)
 				}
 			}
@@ -48,15 +48,15 @@ func TestDay01_SolvePart2(t *testing.T) {
 
 	type TestCase struct {
 		input    []string
-		expected int
+		expected solutions.Solution
 	}
 
 	testsCases := []TestCase{
-		{[]string{"("}, 1},
-		{[]string{"(", ")"}, 0},
-		{[]string{"(", "(", ")"}, 1},
-		{[]string{"(", ")", "(", ")"}, 0},
-		{[]string{"(", "(", ")", "(", ")"}, 1},
+		{[]string{"("}, solutions.Solution{Result: 1}},
+		{[]string{"(", ")"}, solutions.Solution{Result: 0}},
+		{[]string{"(", "(", ")"}, solutions.Solution{Result: 1}},
+		{[]string{"(", ")", "(", ")"}, solutions.Solution{Result: 0}},
+		{[]string{"(", "(", ")", "(", ")"}, solutions.Solution{Result: 1}},
 	}
 
 	solver, ok := solutions.GetSolver(2015, 01)
@@ -71,7 +71,7 @@ func TestDay01_SolvePart2(t *testing.T) {
 
 			if err != nil {
 
-				if result != testCase.expected {
+				if result.Result != testCase.expected.Result {
 					t.Fatalf("test %v: expected: %v, got: %v", i+1, testCase.expected, result)
 				}
 			}

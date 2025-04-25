@@ -10,13 +10,13 @@ import (
 
 type Day02 struct{}
 
-func (d Day02) SolvePart1(input []string) (int, error) {
+func (d Day02) SolvePart1(input []string) (solutions.Solution, error) {
 	result := 0
 
 	for _, val := range input {
 		l, w, h, err := d.parseLine(val)
 		if err != nil {
-			return 0, err
+			return solutions.Solution{Result: 0}, err
 		}
 
 		areas := []int{l * w, w * h, h * l}
@@ -25,16 +25,16 @@ func (d Day02) SolvePart1(input []string) (int, error) {
 		result_area := area_total + extra_paper
 		result += result_area
 	}
-	return result, nil
+	return solutions.Solution{Result: result}, nil
 }
 
-func (d Day02) SolvePart2(input []string) (int, error) {
+func (d Day02) SolvePart2(input []string) (solutions.Solution, error) {
 	result := 0
 
 	for _, val := range input {
 		l, w, h, err := d.parseLine(val)
 		if err != nil {
-			return 0, err
+			return solutions.Solution{Result: 0}, err
 		}
 		numbers := []int{l, w, h}
 		slices.Sort(numbers)
@@ -46,7 +46,7 @@ func (d Day02) SolvePart2(input []string) (int, error) {
 		result += total_feet
 	}
 
-	return result, nil
+	return solutions.Solution{Result: result}, nil
 
 }
 

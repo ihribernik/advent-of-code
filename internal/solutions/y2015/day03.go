@@ -15,7 +15,7 @@ func (d Day03) parseLine(input []string) []string {
 	return inputVars
 }
 
-func (d Day03) SolvePart1(input []string) (int, error) {
+func (d Day03) SolvePart1(input []string) (solutions.Solution, error) {
 	position := common.Direction{X: 0, Y: 0}
 
 	visited := []common.Direction{
@@ -31,11 +31,10 @@ func (d Day03) SolvePart1(input []string) (int, error) {
 			visited = append(visited, position)
 		}
 	}
-
-	return len(visited), nil
+	return solutions.Solution{Result: len(visited)}, nil
 }
 
-func (d Day03) SolvePart2(input []string) (int, error) {
+func (d Day03) SolvePart2(input []string) (solutions.Solution, error) {
 	position := common.Direction{X: 0, Y: 0}
 
 	positions := []common.Direction{
@@ -59,7 +58,7 @@ func (d Day03) SolvePart2(input []string) (int, error) {
 		}
 
 	}
-	return len(visited), nil
+	return solutions.Solution{Result: len(visited)}, nil
 }
 
 func init() {

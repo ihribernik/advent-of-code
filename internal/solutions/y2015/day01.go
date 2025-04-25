@@ -4,7 +4,7 @@ import "github.com/ihribernik/advent-of-code/internal/solutions"
 
 type Day01 struct{}
 
-func (d Day01) SolvePart1(input []string) (int, error) {
+func (d Day01) SolvePart1(input []string) (solutions.Solution, error) {
 	result := 0
 	for _, v := range input {
 		switch v {
@@ -17,10 +17,11 @@ func (d Day01) SolvePart1(input []string) (int, error) {
 			continue
 		}
 	}
-	return result, nil
+
+	return solutions.Solution{Result: result}, nil
 }
 
-func (d Day01) SolvePart2(input []string) (int, error) {
+func (d Day01) SolvePart2(input []string) (solutions.Solution, error) {
 	positionChar := 0
 	floor := 0
 
@@ -39,7 +40,8 @@ func (d Day01) SolvePart2(input []string) (int, error) {
 			continue
 		}
 	}
-	return positionChar, nil
+
+	return solutions.Solution{Result: positionChar}, nil
 }
 
 func init() {

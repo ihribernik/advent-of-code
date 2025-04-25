@@ -6,31 +6,42 @@ import (
 	"github.com/ihribernik/advent-of-code/internal/solutions"
 )
 
-func TestDay04Part01(t *testing.T) {
-	type TestCase = struct {
+func TestDay07Part1(t *testing.T) {
+
+	type TestCase = []struct {
 		desc           string
 		input          []string
 		expectedResult solutions.Solution
 	}
 
-	testCases := []TestCase{
+	testCases := TestCase{
 		{
-			desc: "answer is 609043...",
+			desc: "test circuit",
 			input: []string{
-				"abcdef",
+				"123 -> x",
+				"456 -> y",
+				"x AND y -> d",
+				"x OR y -> e",
+				"x LSHIFT 2 -> f",
+				"y RSHIFT 2 -> g",
+				"NOT x -> h",
+				"NOT y -> i",
 			},
-			expectedResult: solutions.Solution{Result: 609043},
-		},
-		{
-			desc: "anwser is 1048970...",
-			input: []string{
-				"pqrstuv",
+			expectedResult: solutions.Solution{
+				MapResult: map[string]any{
+					"d": 72,
+					"e": 507,
+					"f": 492,
+					"g": 114,
+					"h": 65412,
+					"i": 65079,
+					"x": 123,
+					"y": 456,
+				},
 			},
-			expectedResult: solutions.Solution{Result: 1048970},
 		},
 	}
-
-	solver, ok := solutions.GetSolver(2015, 04)
+	solver, ok := solutions.GetSolver(2015, 07)
 
 	if !ok {
 		t.Errorf("failed to get solver")
@@ -41,7 +52,6 @@ func TestDay04Part01(t *testing.T) {
 			result, err := solver.SolvePart1(tC.input)
 			if result.Result != tC.expectedResult.Result || err != nil {
 				t.Errorf(`solver.SolverPart1(%v) = %v, whants %v, error %v`, tC.input, result, tC.expectedResult, err)
-
 			}
 		})
 	}
