@@ -62,7 +62,6 @@ func (d Day06) SolvePart1(input []string) (solutions.Solution, error) {
 
 		for x := fromDx; x <= toDx; x++ {
 			for y := fromDy; y <= toDy; y++ {
-				// fmt.Printf("x:%v, fromdx:%v, todx:%v, y:%d,fromDy:%d, toDy:%d\n", x, fromDx, toDx, y, fromDy, toDy)
 				key := fmt.Sprintf("%v,%v", x, y)
 				prevAction := matrix[key]
 				posibleAction := false
