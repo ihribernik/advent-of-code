@@ -15,7 +15,7 @@ func (d Day03) parseLine(input []string) []string {
 }
 
 func (d Day03) SolvePart1(input []string) (int, error) {
-	position := directions.Direction{X: 0, Y: 0}
+	position := directions.NewDirection(0, 0)
 
 	visited := []directions.Direction{
 		position,
@@ -34,7 +34,7 @@ func (d Day03) SolvePart1(input []string) (int, error) {
 }
 
 func (d Day03) SolvePart2(input []string) (int, error) {
-	position := directions.Direction{X: 0, Y: 0}
+	position := directions.NewDirection(0, 0)
 
 	positions := []directions.Direction{
 		position,

@@ -2,16 +2,16 @@ package directions
 
 import "fmt"
 
-type Direction struct {
-	X int
-	Y int
+type direction struct {
+	x int
+	y int
 }
 
 var (
-	NORTH = Direction{0, 1}
-	SOUTH = Direction{0, -1}
-	EAST  = Direction{1, 0}
-	WEST  = Direction{-1, 0}
+	NORTH = NewDirection(0, 1)
+	SOUTH = NewDirection(0, -1)
+	EAST  = NewDirection(1, 0)
+	WEST  = NewDirection(-1, 0)
 
 	DIRECTIONS = map[string]Direction{
 		"^": NORTH,
@@ -21,34 +21,42 @@ var (
 	}
 )
 
-func NewDirection(x, y int) *Direction {
-	return &Direction{x, y}
+func NewDirection(x, y int) Direction {
+	return direction{x: x, y: y}
 }
 
-func (dir Direction) LessThan(otherDir Direction) bool {
-	if dir.X != otherDir.X {
-		return dir.X < otherDir.X
+func (d direction) X() int {
+	return d.x
+}
+
+func (d direction) Y() int {
+	return d.y
+}
+
+func (d direction) LessThan(dir Direction) bool {
+	if d.x != dir.X() {
+		return d.x < dir.X()
 	}
-	return dir.Y < otherDir.Y
+	return d.y < dir.Y()
 }
 
-func (dir Direction) GreaterThan(otherDir Direction) bool {
-	if dir.X != otherDir.X {
-		return dir.X > otherDir.X
+func (d direction) GreaterThan(dir Direction) bool {
+	if d.x != dir.X() {
+		return d.x > dir.X()
 	}
-	return dir.Y > otherDir.Y
+	return d.y > dir.Y()
 }
 
-func (dir Direction) NewPositionWith(otherDir Direction) Direction {
-	return dir.NewPosition(otherDir, 1)
+func (d direction) NewPositionWith(dir Direction) Direction {
+	return d.NewPosition(dir, 1)
 }
 
-func (dir Direction) NewPosition(otherDir Direction, n int) Direction {
-	dx := dir.X + (n * otherDir.X)
-	dy := dir.Y + (n * otherDir.Y)
-	return Direction{X: dx, Y: dy}
+func (d direction) NewPosition(dir Direction, n int) Direction {
+	dx := d.x + (n * dir.X())
+	dy := d.y + (n * dir.Y())
+	return NewDirection(dx, dy)
 }
 
-func (dir Direction) String() string {
-	return fmt.Sprintf("%d,%d", dir.X, dir.Y)
+func (d direction) String() string {
+	return fmt.Sprintf("%d,%d", d.x, d.y)
 }

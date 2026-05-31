@@ -4,11 +4,6 @@ import (
 	"fmt"
 )
 
-type Solver interface {
-	SolvePart1(input []string) (int, error)
-	SolvePart2(input []string) (int, error)
-}
-
 type Key struct {
 	Year int
 	Day  int
@@ -20,7 +15,7 @@ type Registry struct {
 
 func NewRegistry() *Registry {
 	return &Registry{
-		make(map[Key]Solver),
+		solvers: make(map[Key]Solver),
 	}
 }
 

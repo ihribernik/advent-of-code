@@ -13,12 +13,12 @@ func TestNewDirection(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want *Direction
+		want Direction
 	}{
-		{name: "x: 1, y: 2", args: args{x: 1, y: 2}, want: &Direction{X: 1, Y: 2}},
-		{name: "x: -1, y: 2", args: args{x: -1, y: 2}, want: &Direction{X: -1, Y: 2}},
-		{name: "x: 1, y: -2", args: args{x: 1, y: -2}, want: &Direction{X: 1, Y: -2}},
-		{name: "x: -1, y: -2", args: args{x: -1, y: -2}, want: &Direction{X: -1, Y: -2}},
+		{name: "x: 1, y: 2", args: args{x: 1, y: 2}, want: NewDirection(1, 2)},
+		{name: "x: -1, y: 2", args: args{x: -1, y: 2}, want: NewDirection(-1, 2)},
+		{name: "x: 1, y: -2", args: args{x: 1, y: -2}, want: NewDirection(1, -2)},
+		{name: "x: -1, y: -2", args: args{x: -1, y: -2}, want: NewDirection(-1, -2)},
 	}
 
 	for _, tt := range tests {

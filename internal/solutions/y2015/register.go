@@ -22,6 +22,7 @@ func Register(r *registry.Registry) error {
 		{7, Day07{}},
 		{8, Day08{}},
 		{9, Day09{}},
+		{10, Day10{}},
 	}
 
 	for _, e := range entries {
