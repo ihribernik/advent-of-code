@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/ihribernik/aoc-cli/internal/registry"
-	"github.com/ihribernik/aoc-cli/internal/solutions"
+	"github.com/ihribernik/aoc-cli/internal/solutions/y2015"
 )
 
 const testYear = 2015
@@ -13,7 +13,7 @@ func mustSolver(t *testing.T, day int) registry.Solver {
 	t.Helper()
 
 	reg := registry.NewRegistry()
-	if err := solutions.RegisterYear(reg, testYear); err != nil {
+	if err := y2015.Register(reg); err != nil {
 		t.Fatalf("failed to load registry for the year %d, err: %v", testYear, err)
 	}
 
@@ -24,4 +24,3 @@ func mustSolver(t *testing.T, day int) registry.Solver {
 
 	return solver
 }
-

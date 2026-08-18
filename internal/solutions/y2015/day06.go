@@ -47,6 +47,9 @@ func parseCoordPair(raw string) (int, int, error) {
 	if err != nil {
 		return 0, 0, fmt.Errorf("invalid y coordinate %q: %w", parts[1], err)
 	}
+	if dx < 0 || dx > 999 || dy < 0 || dy > 999 {
+		return 0, 0, fmt.Errorf("coordinate %q is outside the 0-999 grid", raw)
+	}
 
 	return dx, dy, nil
 }
@@ -65,6 +68,9 @@ func parseInstruction(line string) (action string, fromDx int, fromDy int, toDx 
 	if err != nil {
 		return "", 0, 0, 0, 0, err
 	}
+	if fromDx > toDx || fromDy > toDy {
+		return "", 0, 0, 0, 0, fmt.Errorf("coordinate range must start before it ends")
+	}
 
 	return matches[1], fromDx, fromDy, toDx, toDy, nil
 }
@@ -74,10 +80,10 @@ func (d Day06) SolvePart1(input []string) (int, error) {
 	result := 0
 	matrix := d.getMatrix()
 
-	for _, v := range input {
+	for i, v := range input {
 		action, fromDx, fromDy, toDx, toDy, err := parseInstruction(v)
 		if err != nil {
-			return 0, err
+			return 0, newInputError(6, i+1, v, err)
 		}
 
 		for x := fromDx; x <= toDx; x++ {
@@ -113,10 +119,10 @@ func (d Day06) SolvePart2(input []string) (int, error) {
 	result := 0
 	matrix := d.getMatrixNumeric()
 
-	for _, v := range input {
+	for i, v := range input {
 		action, fromDx, fromDy, toDx, toDy, err := parseInstruction(v)
 		if err != nil {
-			return 0, err
+			return 0, newInputError(6, i+1, v, err)
 		}
 
 		for x := fromDx; x <= toDx; x++ {

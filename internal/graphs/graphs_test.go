@@ -33,7 +33,7 @@ func TestGraph_AddUndirectedEdge(t *testing.T) {
 	}
 	tests := []struct {
 		name string
-		g    *Graph
+		g    *graph
 		args args
 	}{
 		// TODO: Add test cases.
@@ -48,7 +48,7 @@ func TestGraph_AddUndirectedEdge(t *testing.T) {
 func TestGraph_NodeCount(t *testing.T) {
 	tests := []struct {
 		name string
-		g    *Graph
+		g    *graph
 		want int
 	}{
 		// TODO: Add test cases.
@@ -64,7 +64,7 @@ func TestGraph_NodeCount(t *testing.T) {
 
 func TestShortestHamiltonianPath(t *testing.T) {
 	type args struct {
-		g *Graph
+		g *graph
 	}
 	tests := []struct {
 		name string
@@ -84,7 +84,7 @@ func TestShortestHamiltonianPath(t *testing.T) {
 
 func Test_walkShortest(t *testing.T) {
 	type args struct {
-		g     *Graph
+		g     *graph
 		state *pathSearchState
 		node  string
 		count int
@@ -105,7 +105,7 @@ func Test_walkShortest(t *testing.T) {
 
 func TestLongestHamiltonianPath(t *testing.T) {
 	type args struct {
-		g *Graph
+		g *graph
 	}
 	tests := []struct {
 		name string
@@ -125,7 +125,7 @@ func TestLongestHamiltonianPath(t *testing.T) {
 
 func Test_walkLongest(t *testing.T) {
 	type args struct {
-		g     *Graph
+		g     *graph
 		state *pathSearchState
 		node  string
 		count int

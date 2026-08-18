@@ -1,6 +1,8 @@
 package y2015
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -9,15 +11,21 @@ import (
 
 type Day09 struct{}
 
-func parseDay09Graph(input []string) (*graphs.Graph, error) {
+func parseDay09Graph(input []string) (graphs.Graph, error) {
 	graph := graphs.New(len(input))
 
-	for _, line := range input {
-		parts := strings.Split(line, " ")
+	for i, line := range input {
+		parts := strings.Fields(line)
+		if len(parts) != 5 || parts[1] != "to" || parts[3] != "=" || parts[0] == "" || parts[2] == "" {
+			return nil, newInputError(9, i+1, line, errors.New("expected source to destination = distance"))
+		}
 		src, dst, dist := parts[0], parts[2], parts[4]
 		distInt, err := strconv.Atoi(dist)
 		if err != nil {
-			return nil, err
+			return nil, newInputError(9, i+1, line, fmt.Errorf("invalid distance %q: %w", dist, err))
+		}
+		if distInt < 0 {
+			return nil, newInputError(9, i+1, line, errors.New("distance must not be negative"))
 		}
 
 		graph.AddUndirectedEdge(src, dst, distInt)

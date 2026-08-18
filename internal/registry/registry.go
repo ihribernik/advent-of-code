@@ -1,30 +1,23 @@
 package registry
 
-import (
-	"fmt"
-)
-
 type Key struct {
 	Year int
 	Day  int
 }
 
-type Registry struct {
+type registry struct {
 	solvers map[Key]Solver
 }
 
-func NewRegistry() *Registry {
-	return &Registry{
+func NewRegistry() Registry {
+	return &registry{
 		solvers: make(map[Key]Solver),
 	}
 }
 
-func (r *Registry) Register(year int, day int, solver Solver) error {
-	if r == nil {
-		return ErrNilRegistry
-	}
+func (r *registry) Register(year int, day int, solver Solver) error {
 	if solver == nil {
-		return fmt.Errorf("nil solver for %d %d", year, day)
+		return &RegistrationError{Year: year, Day: day, Err: ErrNilSolver}
 	}
 	if r.solvers == nil {
 		r.solvers = make(map[Key]Solver)
@@ -32,15 +25,15 @@ func (r *Registry) Register(year int, day int, solver Solver) error {
 
 	key := Key{year, day}
 	if _, exists := r.solvers[key]; exists {
-		return fmt.Errorf("solver already registered for %v", key)
+		return &RegistrationError{Year: year, Day: day, Err: ErrSolverAlreadyRegistered}
 	}
 
 	r.solvers[key] = solver
 	return nil
 }
 
-func (r *Registry) GetSolver(year int, day int) (Solver, bool) {
-	if r == nil || r.solvers == nil {
+func (r *registry) GetSolver(year int, day int) (Solver, bool) {
+	if r.solvers == nil {
 		return nil, false
 	}
 

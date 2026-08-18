@@ -11,7 +11,7 @@ func (d Day08) SolvePart1(input []string) (int, error) {
 	inMemoryCounter := 0
 	literalsCounter := 0
 
-	for _, line := range input {
+	for i, line := range input {
 		if len(line) == 0 {
 			continue
 		}
@@ -19,7 +19,7 @@ func (d Day08) SolvePart1(input []string) (int, error) {
 		literalsCounter += len(line)
 		evaluated, err := strconv.Unquote(line)
 		if err != nil {
-			return 0, err
+			return 0, newInputError(8, i+1, line, err)
 		}
 
 		inMemoryCounter += len(evaluated)

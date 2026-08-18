@@ -1,63 +1,53 @@
 package run
 
-import "github.com/ihribernik/aoc-cli/internal/registry"
+import (
+	"slices"
+)
 
-type NewRegistryFunc func() *registry.Registry
-type RegisterYearFunc func(*registry.Registry, int) error
-type GetInputFunc func(int, int) ([]string, error)
+type LoadInputFunc func(year, day int) ([]string, error)
 
 type Result struct {
 	Part1 int
 	Part2 int
 }
 
-type Runner struct {
-	newRegistry  NewRegistryFunc
-	registerYear RegisterYearFunc
-	getInput     GetInputFunc
+type runner struct {
+	solvers   SolverResolver
+	loadInput LoadInputFunc
 }
 
-func NewRunner(newRegistry NewRegistryFunc, registerYear RegisterYearFunc, getInput GetInputFunc) *Runner {
-	return &Runner{
-		newRegistry:  newRegistry,
-		registerYear: registerYear,
-		getInput:     getInput,
+// NewRunner constructs a runner with its required dependencies.
+func NewRunner(solvers SolverResolver, loadInput LoadInputFunc) (Runner, error) {
+	if solvers == nil {
+		return nil, ConfigurationError{Dependency: "solver resolver", Err: ErrRunnerNotConfigured}
 	}
+	if loadInput == nil {
+		return nil, ConfigurationError{Dependency: "input loader", Err: ErrRunnerNotConfigured}
+	}
+
+	return &runner{
+		solvers:   solvers,
+		loadInput: loadInput,
+	}, nil
 }
 
-func (r *Runner) Execute(year int, day int) (Result, error) {
-	if r == nil {
-		return Result{}, ErrNilRunner
-	}
-	if r.newRegistry == nil || r.registerYear == nil || r.getInput == nil {
-		return Result{}, ErrRunnerNotConfigured
-	}
-
-	reg := r.newRegistry()
-	if reg == nil {
-		return Result{}, ErrNilRegistry
-	}
-
-	if err := r.registerYear(reg, year); err != nil {
-		return Result{}, &ErrRegisterYear{Year: year, Err: err}
-	}
-
-	solver, ok := reg.GetSolver(year, day)
-	if !ok {
+func (r *runner) Execute(year int, day int) (Result, error) {
+	solver, ok := r.solvers.GetSolver(year, day)
+	if !ok || solver == nil {
 		return Result{}, &ErrSolverNotFound{Year: year, Day: day}
 	}
 
-	input, err := r.getInput(year, day)
+	input, err := r.loadInput(year, day)
 	if err != nil {
 		return Result{}, &ErrGetInput{Year: year, Day: day, Err: err}
 	}
 
-	part1, err := solver.SolvePart1(input)
+	part1, err := solver.SolvePart1(slices.Clone(input))
 	if err != nil {
 		return Result{}, &ErrSolvePart{Part: 1, Err: err}
 	}
 
-	part2, err := solver.SolvePart2(input)
+	part2, err := solver.SolvePart2(slices.Clone(input))
 	if err != nil {
 		return Result{}, &ErrSolvePart{Part: 2, Err: err}
 	}

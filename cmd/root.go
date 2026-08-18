@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
+	"github.com/ihribernik/aoc-cli/internal/container"
 	"github.com/spf13/cobra"
 )
 
@@ -17,10 +15,12 @@ var rootCmd = &cobra.Command{
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	err := rootCmd.Execute()
+func Execute() error {
+	configuredContainer, err := container.New()
 	if err != nil {
-		_, _ = fmt.Fprintln(os.Stderr, "Error:", err)
-		os.Exit(1)
+		return mapStartupError(err)
 	}
+
+	appContainer = configuredContainer
+	return rootCmd.Execute()
 }

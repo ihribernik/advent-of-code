@@ -1,36 +1,38 @@
 package run
 
-import "fmt"
-
-var (
-	ErrNilRunner           = fmt.Errorf("nil runner")
-	ErrRunnerNotConfigured = fmt.Errorf("runner dependencies are not configured")
-	ErrNilRegistry         = fmt.Errorf("registry factory returned nil")
+import (
+	"errors"
+	"fmt"
 )
 
-type ErrRegisterYear struct {
-	Year int
-	Err  error
+var (
+	// ErrRunnerNotConfigured indicates that a required runner dependency is missing.
+	ErrRunnerNotConfigured = errors.New("runner dependencies are not configured")
+)
+
+// ConfigurationError describes a missing dependency required to initialize a runner.
+type ConfigurationError struct {
+	Dependency string
+	Err        error
 }
 
-func (e *ErrRegisterYear) Error() string {
-	return fmt.Sprintf("register year %d: %v", e.Year, e.Err)
+func (e ConfigurationError) Error() string {
+	return fmt.Sprintf("initialize runner %s: %v", e.Dependency, e.Err)
 }
 
-func (e *ErrRegisterYear) Unwrap() error { return e.Err }
+func (e ConfigurationError) Unwrap() error { return e.Err }
 
+// ErrSolverNotFound describes a missing solver for a year and day.
 type ErrSolverNotFound struct {
 	Year int
 	Day  int
-	Err  error
 }
 
 func (e *ErrSolverNotFound) Error() string {
 	return fmt.Sprintf("cannot find a solution for year %d day %d", e.Year, e.Day)
 }
 
-func (e *ErrSolverNotFound) Unwrap() error { return e.Err }
-
+// ErrGetInput describes a failure to load puzzle input.
 type ErrGetInput struct {
 	Year int
 	Day  int
@@ -43,6 +45,7 @@ func (e *ErrGetInput) Error() string {
 
 func (e *ErrGetInput) Unwrap() error { return e.Err }
 
+// ErrSolvePart describes a failure while solving one puzzle part.
 type ErrSolvePart struct {
 	Part int
 	Err  error

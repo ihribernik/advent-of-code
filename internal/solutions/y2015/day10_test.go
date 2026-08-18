@@ -1,74 +1,41 @@
 package y2015_test
 
 import (
+	"errors"
 	"testing"
 
+	"github.com/ihribernik/aoc-cli/internal/puzzle"
 	"github.com/ihribernik/aoc-cli/internal/solutions/y2015"
 )
 
-func TestDay10_SolvePart1(t *testing.T) {
+func TestDay10ReturnsNotImplemented(t *testing.T) {
+	solver := y2015.Day10{}
+
 	tests := []struct {
-		name    string // description of this test case
-		input   []string
-		want    string
-		wantErr bool
+		name  string
+		solve func([]string) (int, error)
 	}{
-		{name: "1 becomes 11 (1 copy of digit 1)", input: []string{"1"}, want: "11", wantErr: false},
-		{name: "11 becomes 21 (2 copies of digit 1).", input: []string{"11"}, want: "21", wantErr: false},
-		{name: "21 becomes 1211 (one 2 followed by one 1).", input: []string{"21"}, want: "1211", wantErr: false},
-		{name: "1211 becomes 111221 (one 1, one 2, and two 1s)", input: []string{"1211"}, want: "111221", wantErr: false},
-		{name: "111221 becomes 312211 (three 1s, two 2s, and one 1).", input: []string{"111221"}, want: "312211", wantErr: false},
+		{name: "part 1", solve: solver.SolvePart1},
+		{name: "part 2", solve: solver.SolvePart2},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			// TODO: construct the receiver type.
-			var d y2015.Day10
-			got, gotErr := d.SolvePart1(tt.input)
-			if gotErr != nil {
-				if !tt.wantErr {
-					t.Errorf("SolvePart1() failed: %v", gotErr)
-				}
-				return
-			}
-			if tt.wantErr {
-				t.Fatal("SolvePart1() succeeded unexpectedly")
-			}
-			// TODO: update the condition below to compare got with tt.want.
-			if true {
-				t.Errorf("SolvePart1() = %v, want %v", got, tt.want)
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			_, err := tc.solve([]string{"1"})
+			if !errors.Is(err, puzzle.ErrNotImplemented) {
+				t.Fatalf("expected ErrNotImplemented, got %v", err)
 			}
 		})
 	}
 }
 
-func TestDay10_SolvePart2(t *testing.T) {
-	tests := []struct {
-		name string // description of this test case
-		// Named input parameters for target function.
-		input   []string
-		want    int
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			// TODO: construct the receiver type.
-			var d y2015.Day10
-			got, gotErr := d.SolvePart2(tt.input)
-			if gotErr != nil {
-				if !tt.wantErr {
-					t.Errorf("SolvePart2() failed: %v", gotErr)
-				}
-				return
-			}
-			if tt.wantErr {
-				t.Fatal("SolvePart2() succeeded unexpectedly")
-			}
-			// TODO: update the condition below to compare got with tt.want.
-			if true {
-				t.Errorf("SolvePart2() = %v, want %v", got, tt.want)
-			}
-		})
+func TestDay10RejectsMissingInput(t *testing.T) {
+	solver := y2015.Day10{}
+
+	for _, solve := range []func([]string) (int, error){solver.SolvePart1, solver.SolvePart2} {
+		_, err := solve(nil)
+		if !errors.Is(err, puzzle.ErrInvalidInput) {
+			t.Fatalf("expected ErrInvalidInput, got %v", err)
+		}
 	}
 }

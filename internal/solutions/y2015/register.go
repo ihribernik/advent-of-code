@@ -11,7 +11,7 @@ type entry struct {
 	solver registry.Solver
 }
 
-func Register(r *registry.Registry) error {
+func Register(r registry.Registry) error {
 	entries := []entry{
 		{1, Day01{}},
 		{2, Day02{}},

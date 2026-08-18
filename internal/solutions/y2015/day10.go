@@ -1,8 +1,12 @@
 package y2015
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
+
+	"github.com/ihribernik/aoc-cli/internal/puzzle"
 )
 
 type Day10 struct{}
@@ -35,15 +39,17 @@ func ParseRun(seq string) []Run {
 }
 
 func (d Day10) SolvePart1(input []string) (int, error) {
-	entries := strings.TrimSpace(input[0])
-
-	for range 40 {
-		entries = lookAndSay(entries)
+	if len(input) == 0 || strings.TrimSpace(input[0]) == "" {
+		return 0, newInputError(10, 0, "", errors.New("missing starting sequence"))
 	}
 
-	return len(entries), nil
+	return 0, fmt.Errorf("2015 day 10 part 1: %w", puzzle.ErrNotImplemented)
 }
 
 func (d Day10) SolvePart2(input []string) (int, error) {
-	panic("not implemented") // TODO: Implement
+	if len(input) == 0 || strings.TrimSpace(input[0]) == "" {
+		return 0, newInputError(10, 0, "", errors.New("missing starting sequence"))
+	}
+
+	return 0, fmt.Errorf("2015 day 10 part 2: %w", puzzle.ErrNotImplemented)
 }

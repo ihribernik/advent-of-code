@@ -1,17 +1,14 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
-	"os"
 
 	"github.com/ihribernik/aoc-cli/internal/container"
-	"github.com/ihribernik/aoc-cli/internal/inputs"
 	runusecase "github.com/ihribernik/aoc-cli/internal/run"
 	"github.com/spf13/cobra"
 )
 
-var appContainer = container.New()
+var appContainer container.Container
 
 // runCmd represents the run command
 var runCmd = &cobra.Command{
@@ -37,7 +34,12 @@ func runE(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("invalid --day %d: expected a value between 1 and 25", day)
 	}
 
-	result, err := appContainer.Runner.Execute(year, day)
+	if appContainer == nil || appContainer.GetRunner() == nil {
+		return newCLIError("application runner is not configured", runusecase.ErrRunnerNotConfigured)
+	}
+
+	result, err := appContainer.GetRunner().Execute(year, day)
+
 	if err != nil {
 		return mapRunError(year, day, err)
 	}
@@ -45,36 +47,6 @@ func runE(cmd *cobra.Command, args []string) error {
 	fmt.Println("Solution part 1:", result.Part1)
 	fmt.Println("Solution part 2:", result.Part2)
 	return nil
-}
-
-func mapRunError(year int, day int, err error) error {
-	var registerErr *runusecase.ErrRegisterYear
-	if errors.As(err, &registerErr) {
-		return fmt.Errorf("year %d is not available: %w", registerErr.Year, registerErr.Err)
-	}
-
-	var solverErr *runusecase.ErrSolverNotFound
-	if errors.As(err, &solverErr) {
-		return fmt.Errorf("no solver registered for year %d day %02d", solverErr.Year, solverErr.Day)
-	}
-
-	var inputErr *runusecase.ErrGetInput
-	if errors.As(err, &inputErr) {
-		if errors.Is(inputErr.Err, inputs.ErrEmptyInput) {
-			return fmt.Errorf("input file is empty for year %d day %02d; download the puzzle input from Advent of Code", inputErr.Year, inputErr.Day)
-		}
-		if errors.Is(inputErr.Err, os.ErrNotExist) || os.IsNotExist(inputErr.Err) {
-			return fmt.Errorf("input file not found for year %d day %02d", inputErr.Year, inputErr.Day)
-		}
-		return fmt.Errorf("cannot load input for year %d day %02d: %w", inputErr.Year, inputErr.Day, inputErr.Err)
-	}
-
-	var solveErr *runusecase.ErrSolvePart
-	if errors.As(err, &solveErr) {
-		return fmt.Errorf("failed while solving part %d: %w", solveErr.Part, solveErr.Err)
-	}
-
-	return fmt.Errorf("run failed for year %d day %02d: %w", year, day, err)
 }
 
 func init() {

@@ -2,9 +2,9 @@ package comparations
 
 import "slices"
 
-func ContainsIn(values []string, valuesToCompare []string) bool {
-	for _, valueToCompare := range valuesToCompare {
-		if slices.Contains(values, valueToCompare) {
+func HasAny(values, valuesToCompare []string) bool {
+	for _, value := range valuesToCompare {
+		if slices.Contains(values, value) {
 			return true
 		}
 	}

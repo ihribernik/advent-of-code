@@ -26,6 +26,14 @@ type gate struct {
 	y    string
 }
 
+func New(kind operationKind, x,y string) gate{
+	return gate {
+		kind: kind,
+		x: x,
+		y: y,
+	}
+}
+
 var (
 	andRe    = regexp.MustCompile("^([^ ]+) AND ([^ ]+) -> ([^ ]+)$")
 	assignRe = regexp.MustCompile("^([^ ]+) -> ([^ ]+)$")
@@ -38,7 +46,7 @@ var (
 func generateCircuit(input []string) (map[string]gate, error) {
 	wires := make(map[string]gate)
 
-	for _, line := range input {
+	for i, line := range input {
 		switch {
 		case andRe.MatchString(line):
 			m := andRe.FindStringSubmatch(line)
@@ -59,7 +67,7 @@ func generateCircuit(input []string) (map[string]gate, error) {
 			m := rshiftRe.FindStringSubmatch(line)
 			wires[m[3]] = gate{kind: operationRShift, x: m[1], y: m[2]}
 		default:
-			return nil, errors.New("operation not matched")
+			return nil, newInputError(7, i+1, line, errors.New("operation not matched"))
 		}
 	}
 	return wires, nil
@@ -76,7 +84,7 @@ func calculateWireValue(wire string, wires map[string]gate, memoization map[stri
 
 	g, ok := wires[wire]
 	if !ok {
-		return 0, fmt.Errorf("wire '%s' not found", wire)
+		return 0, newInputError(7, 0, wire, errors.New("wire not found"))
 	}
 
 	var result uint16
@@ -139,7 +147,7 @@ func calculateWireValue(wire string, wires map[string]gate, memoization map[stri
 		}
 		result = v
 	default:
-		return 0, errors.New("unknown operation")
+		return 0, fmt.Errorf("unknown operation kind %d", g.kind)
 	}
 	result &= 0xFFFF
 
